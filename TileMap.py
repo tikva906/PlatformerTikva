@@ -4,11 +4,12 @@ from damagetile import DamageTile
 from ItemTile import ItemTile
 
 class TileMap:
-    def __init__(self, screen, width = 40, height = 40):
+    def __init__(self, screen,game, width = 40, height = 40):
         self.width = width
         self.height = height
         self.screen = screen
         self.group = pygame.sprite.Group()
+        self.game = game
 
     def AddTile(self, texture, x, y):
         x = x * self.width
@@ -20,10 +21,10 @@ class TileMap:
         y = y * self.height
         self.group.add(DamageTile(self.screen, texture, self.width, self.height, x,y, damage))
 
-    def AddItemTile(self, texture, x, y, name):
+    def AddItemTile(self, texture, x, y, name, id):
         x = x * self.width
         y = y * self.height
-        self.group.add(ItemTile(self.screen, texture, self.width, self.height, x,y, name))
+        self.group.add(ItemTile(self.screen, texture, self.width, self.height, x,y, name, id))
 
     def AddDroppedItemTile(self, itemTile, x_player, y_player, tilemap):
         print(f"AddDroppedItemTile Started: itemTile {itemTile}, xplayer {x_player}, yplayer {y_player}, tilemap {tilemap}")

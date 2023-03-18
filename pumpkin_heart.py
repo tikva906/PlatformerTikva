@@ -10,10 +10,12 @@ class Pumpkin_Heart:
     def __init__(self):
         pygame.init()
 
+        self.needToFlip = True
+
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        self.tilemap = TileMap(self.screen)
-        self.damagetilemap = TileMap(self.screen)
-        self.itemtilemap = TileMap(self.screen)
+        self.tilemap = TileMap(self.screen, self)
+        self.damagetilemap = TileMap(self.screen, self)
+        self.itemtilemap = TileMap(self.screen, self)
 
         self.PosTiles()
         self.pumpkin = Pumpkin(self.screen, self)
@@ -85,9 +87,9 @@ class Pumpkin_Heart:
 
         self.damagetilemap.AddDamageTile('igla.png', 23, 16, 0.5)
 
-        self.itemtilemap.AddItemTile('igla.png', 26, 16,'Sedge')
-        self.itemtilemap.AddItemTile('igla.png', 25, 16, 'Sedge')
-        self.itemtilemap.AddItemTile('igla.png', 24, 16, 'Sedge')
+        self.itemtilemap.AddItemTile('igla.png', 26, 16,'Sedge', 1)
+        self.itemtilemap.AddItemTile('igla.png', 25, 16, 'Sedge', 1)
+        self.itemtilemap.AddItemTile('igla.png', 24, 16, 'Sedge', 1)
 
     def KeyDownHandler(self, event):
         # проверяем что шип не = нан
@@ -151,7 +153,9 @@ class Pumpkin_Heart:
             self.damagetilemap.Blitme()
             self.itemtilemap.Blitme()
 
-            pygame.display.flip()
+            if self.needToFlip:
+
+                pygame.display.flip()
 
 
 if __name__ == '__main__':

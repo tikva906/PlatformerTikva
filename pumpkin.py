@@ -180,5 +180,25 @@ class Pumpkin(Sprite):
                 del self.inventory[-1]
 
     def TryGiveItemToBat(self):
+        if (self.NearBat() and len(self.inventory) > 0):
+            item = self.inventory[-1]
+            del self.inventory[-1]
+
+            self.game.bat.inventory.append(item)
+            return True
         return False
+    def NearBat(self):
+        bat = self.game.bat
+        batRight = bat.rect.right
+        batLeft = bat.rect.left
+
+        pixels = 15
+
+        playerLeft = self.rect.left
+        playerRight = self.rect.right
+
+        if (batRight + pixels > playerLeft):
+            return True
+        else:
+            return False
 
