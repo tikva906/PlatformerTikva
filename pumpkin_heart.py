@@ -9,6 +9,7 @@ from bat import Bat
 class Pumpkin_Heart:
     def __init__(self):
         pygame.init()
+        self.isStart = False
 
         self.needToFlip = True
 
@@ -21,6 +22,22 @@ class Pumpkin_Heart:
         self.pumpkin = Pumpkin(self.screen, self)
         self.healthbar = HealtBar(self)
         self.bat = Bat(self.screen, self)
+
+        self.font = pygame.font.SysFont("Arial", 40)
+        self.btn_text = self.font.render("start", True, (1, 0, 0), (1, 187, 255))
+        self.rect = self.btn_text.get_rect()
+        self.rect.center =self.screen.get_rect().center
+
+
+    def DrawButton(self):
+
+        self.screen.blit(self.btn_text, self.rect)
+
+    def CheckButtonClick(self, button_rect, action):
+        mouse_pos = pygame.mouse.get_pos()
+        if button_rect.collidepoint(mouse_pos):
+            if action == "start":
+                self.isStart = True
 
     def PosTiles(self):
         self.tilemap.AddTile('semla.png', 10, 21)
@@ -93,7 +110,7 @@ class Pumpkin_Heart:
 
     def KeyDownHandler(self, event):
         # проверяем что шип не = нан
-        if self.pumpkin != None:
+        if self.pumpkin != None and self.isStart:
             # билдим клавишу
             if event.key == pygame.K_d:
                 # можем двиготся в право
@@ -108,6 +125,9 @@ class Pumpkin_Heart:
                 self.pumpkin.TriggerAction()
             elif event.key == pygame.K_p:
                 self.pumpkin.Drop()
+        if event.key == pygame.K_q:
+            # можем выходить
+            sys.exit()
 
     def KeyUpHandler(self, event):
         # проверяем что шип не = нан
@@ -120,25 +140,32 @@ class Pumpkin_Heart:
             elif event.key == pygame.K_a:
                 # идем на лево
                 self.pumpkin.isLeft = False
-        if event.key == pygame.K_q:
-            # можем выходить
-            sys.exit()
+
 
     def CheckEvent(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
             # проверка нажатия
-            elif event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYDOWN :
                 self.KeyDownHandler(event)
-            elif event.type == pygame.KEYUP:
+            elif event.type == pygame.KEYUP  and self.isStart:
                 self.KeyUpHandler(event)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                self.CheckButtonClick(self.rect, "start")
 
     def Start(self):
+        while not self.isStart:
+            self.CheckEvent()
+            self.screen.fill((33, 174, 234))
+            self.DrawButton()
+            pygame.display.flip()
+
         while True:
             # Обновление экрана (fps)
             self.CheckEvent()
             self.screen.fill((33, 174, 234))
+
 
             if self.pumpkin is not None:
                 self.pumpkin.update()
