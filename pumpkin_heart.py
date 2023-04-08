@@ -1,5 +1,9 @@
+import json
+
 import pygame
 import sys
+
+import SerializationJson
 from pumpkin import Pumpkin
 from TileMap import TileMap
 from healtbar import HealtBar
@@ -14,11 +18,15 @@ class Pumpkin_Heart:
         self.needToFlip = True
 
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
         self.tilemap = TileMap(self.screen, self)
         self.damagetilemap = TileMap(self.screen, self)
         self.itemtilemap = TileMap(self.screen, self)
+        #self.PosTiles()
+        self.LoadLevel(1)
+        #ser = SerializationJson.SerializationJson()
+        #self.SaveMap("level_1", ser.Serialize(self.tilemap, self.itemtilemap, self.damagetilemap))
 
-        self.PosTiles()
         self.pumpkin = Pumpkin(self.screen, self)
         self.healthbar = HealtBar(self)
         self.bat = Bat(self.screen, self)
@@ -38,6 +46,38 @@ class Pumpkin_Heart:
         if button_rect.collidepoint(mouse_pos):
             if action == "start":
                 self.isStart = True
+
+    def SaveMap(self, name, result):
+        with open(f"maps/{name}.json", "w") as file:
+            json.dump(result, file)
+
+    def LoadData(self, name):
+        with open(f"maps/{name}.json", "r") as file:
+            return json.load(file)
+
+    def LoadLevel(self, level):
+        fileName = f"level_{level}"
+
+        data = self.LoadData(fileName)
+
+        damageTilemap = data["DamageTileMap"]
+
+        tileMap = data["TileMap"]
+
+        itemTileMap = data["ItemTileMap"]
+
+
+        for el in damageTilemap:
+            print(el["texture"], el["x"], el["y"], el["damage"])
+            self.damagetilemap.AddDamageTile(el["texture"], el["x"], el["y"], el["damage"])
+            print(self.damagetilemap.group.sprites())
+
+        for el in tileMap:
+            self.tilemap.AddTile(el["texture"], el["x"], el["y"])
+
+        for el in itemTileMap:
+            self.itemtilemap.AddItemTile(el["texture"], el["x"], el["y"], el["name"], el["id"])
+
 
     def PosTiles(self):
         self.tilemap.AddTile('semla.png', 10, 21)

@@ -6,6 +6,7 @@ class Tile(Sprite):
         super().__init__()
         self.Screen = screen
         self.ScreenRect = self.Screen.get_rect()
+        self.texture = texture
         self.image = self.LoadImage(texture,width,height)
         # Получить сетку этой картинки
         self.rect = self.image.get_rect()
@@ -16,6 +17,7 @@ class Tile(Sprite):
         self.rect.top = y
 
     def Blitme(self):
+        print(f"Отрисован: {self}")
         self.Screen.blit(self.image,self.rect)
 
     def update(self):

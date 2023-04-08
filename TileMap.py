@@ -57,6 +57,7 @@ class TileMap:
 
     def Blitme(self):
         for tile in self.group.sprites():
+            print(tile)
             tile.Blitme()
 
     def Update(self):
