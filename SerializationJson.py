@@ -20,7 +20,10 @@ class SerializationJson:
         itemTileMaplist = []
 
         for el in itemTileMap.group.sprites():
-            itemTileMaplist.append(self.SerializeItemTile(el))
+            ser = self.SerializeItemTile(el)
+            ser["x"] = ser["x"] // itemTileMap.width
+            ser["y"] = ser["y"] // itemTileMap.height
+            itemTileMaplist.append(ser)
 
         return itemTileMaplist
 
@@ -28,8 +31,10 @@ class SerializationJson:
         TileMaplist = []
 
         for el in tileMap.group.sprites():
-            print(el)
-            TileMaplist.append(self.SerializeTile(el))
+            ser = self.SerializeTile(el)
+            ser["x"] = ser["x"] // tileMap.width
+            ser["y"] = ser["y"] // tileMap.height
+            TileMaplist.append(ser)
         print(TileMaplist)
         return TileMaplist
 
@@ -37,7 +42,10 @@ class SerializationJson:
         DamageTileMaplist = []
 
         for el in damageTileMap.group.sprites():
-            DamageTileMaplist.append(self.SerializeDamageTile(el))
+            ser = self.SerializeDamageTile(el)
+            ser["x"] = ser["x"] // damageTileMap.width
+            ser["y"] = ser["y"] // damageTileMap.height
+            DamageTileMaplist.append(ser)
 
         return DamageTileMaplist
 
