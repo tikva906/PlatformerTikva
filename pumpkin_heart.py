@@ -11,7 +11,7 @@ from bat import Bat
 
 
 class Pumpkin_Heart:
-    def __init__(self):
+    def __init__(self, arg="main"):
         pygame.init()
         self.isStart = False
 
@@ -23,7 +23,10 @@ class Pumpkin_Heart:
         self.damagetilemap = TileMap(self.screen, self)
         self.itemtilemap = TileMap(self.screen, self)
         #self.PosTiles()
-        self.LoadLevel(1)
+        self.level = 1
+        if (arg == "main"):
+            self.LoadLevel(f"level_{self.level}")
+
         #ser = SerializationJson.SerializationJson()
         #self.SaveMap("level_1", ser.Serialize(self.tilemap, self.itemtilemap, self.damagetilemap))
 
@@ -56,7 +59,7 @@ class Pumpkin_Heart:
             return json.load(file)
 
     def LoadLevel(self, level):
-        fileName = f"level_{level}"
+        fileName = level
 
         data = self.LoadData(fileName)
 
