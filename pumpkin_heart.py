@@ -33,8 +33,7 @@ class Pumpkin_Heart:
         self.healthbar = HealtBar(self)
         self.bat = Bat(self.screen, self)
 
-        self.font = pygame.font.SysFont("Arial", 40)
-        self.btn_text = self.font.render("start", True, (1, 0, 0), (1, 187, 255))
+        self.btn_text = SerializationJson.SerializationJson.GetStartButton()
         self.rect = self.btn_text.get_rect()
         self.rect.center =self.screen.get_rect().center
 
