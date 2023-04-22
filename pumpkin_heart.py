@@ -14,7 +14,6 @@ class Pumpkin_Heart:
     def __init__(self, arg="main"):
         pygame.init()
         self.isStart = False
-
         self.needToFlip = True
 
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -41,7 +40,6 @@ class Pumpkin_Heart:
 
 
     def DrawButton(self):
-
         self.screen.blit(self.btn_text, self.rect)
 
     def CheckButtonClick(self, button_rect, action):
@@ -194,12 +192,19 @@ class Pumpkin_Heart:
                 self.KeyDownHandler(event)
             elif event.type == pygame.KEYUP  and self.isStart:
                 self.KeyUpHandler(event)
+
+
+    def CheckUIEvent(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 self.CheckButtonClick(self.rect, "start")
 
+
     def Start(self):
         while not self.isStart:
-            self.CheckEvent()
+            self.CheckUIEvent()
             self.screen.fill((33, 174, 234))
             self.DrawButton()
             pygame.display.flip()
