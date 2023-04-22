@@ -1,0 +1,3 @@
+{
+  "StartButton": {"Font": {"Style": "Arial", "Size": 40}, "Render": {"Text": "start", "Antialias": true, "TextColor": [1, 0, 0], "Background": [1, 187, 255]}}
+}

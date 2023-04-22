@@ -1,3 +1,5 @@
+import json
+import pygame
 import ItemTile
 from Tile import Tile
 from damagetile import DamageTile
@@ -6,6 +8,25 @@ from TileMap import TileMap
 # сериализация - преобразование класса в текст
 # （хранить будем словари - поэтому в словарь)
 class SerializationJson:
+
+    @staticmethod
+    def GetStartButton():
+        # {"Font": {"Style": "Arial", "Size": 40}, "Render": {"Text": "start", "Antialias": True, "TextColor": [1, 0, 0], "Background": [1, 187, 255]}}
+        with open(f"UI/menu.json", "r") as file:
+            data = json.load(file)
+            startbtn = data["StartButton"]
+            style = startbtn["Font"]["Style"]
+            size = startbtn["Font"]["Size"]
+            text = startbtn["Render"]["Text"]
+            antialias = startbtn["Render"]["Antialias"]
+            textColor = startbtn["Render"]["TextColor"]
+            txtColorCort = (textColor[0], textColor[1], textColor[2])
+            backColor = startbtn["Render"]["Background"]
+            backColorCort = (backColor[0], backColor[1], backColor[2])
+            font = pygame.font.SysFont(style, size)
+            btn_text = font.render(text, antialias, txtColorCort, backColorCort)
+            return btn_text
+
     def SerializeTile(self, tile): # указал явно что надо передавать
         return {"texture": tile.texture, "x": tile.rect.left, "y": tile.rect.top}
 
