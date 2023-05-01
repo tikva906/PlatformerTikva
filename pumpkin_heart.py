@@ -33,19 +33,26 @@ class Pumpkin_Heart:
         self.healthbar = HealtBar(self)
         self.bat = Bat(self.screen, self)
 
-        self.btn_text = SerializationJson.SerializationJson.GetStartButton()
-        self.rect = self.btn_text.get_rect()
-        self.rect.center =self.screen.get_rect().center
+        #self.btn_text = SerializationJson.SerializationJson.GetStartButton()
+        #self.rect = self.btn_text.get_rect()
+        #self.rect.center =self.screen.get_rect().center
+
+        self.button = SerializationJson.SerializationJson.GetStartButton(self)
+        self.button.rect.center = self.screen.get_rect().center
 
 
-    def DrawButton(self):
-        self.screen.blit(self.btn_text, self.rect)
+    #def DrawButton(self):
+    #    self.screen.blit(self.btn_text, self.rect)
 
     def CheckButtonClick(self, button_rect, action):
         mouse_pos = pygame.mouse.get_pos()
         if button_rect.collidepoint(mouse_pos):
             if action == "start":
                 self.isStart = True
+
+    def InvokeBtnEvent(self, name):
+        if name == "StartButton":
+            self.isStart = True
 
     def SaveMap(self, name, result):
         with open(f"maps/{name}.json", "w") as file:
@@ -197,15 +204,17 @@ class Pumpkin_Heart:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                self.CheckButtonClick(self.rect, "start")
+            #elif event.type == pygame.MOUSEBUTTONDOWN:
+            #    self.CheckButtonClick(self.rect, "start")
 
 
     def Start(self):
         while not self.isStart:
             self.CheckUIEvent()
             self.screen.fill((33, 174, 234))
-            self.DrawButton()
+            #self.DrawButton()
+            self.button.update()
+            self.button.blitme()
             pygame.display.flip()
 
         while True:
