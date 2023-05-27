@@ -1,3 +1,6 @@
 {
-  "StartButton": {"Font": {"Style": "Arial", "Size": 40}, "Render": {"Text": "start", "Antialias": true, "TextColor": [1, 0, 0], "Background": [1, 187, 255]}}
+  "Buttons": [
+    {"Name": "StartButton","Font": {"Style": "Arial", "Size": 40}, "Render": {"Text": "start", "Antialias": true, "TextColor": [1, 0, 0], "Background": [1, 187, 255]}},
+    {"Name": "LevelButton","Font": {"Style": "Arial", "Size": 40}, "Render": {"Text": null, "Antialias": true, "TextColor": [1, 0, 0], "Background": [1, 187, 255]}}
+  ]
 }

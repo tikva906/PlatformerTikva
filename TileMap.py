@@ -27,7 +27,6 @@ class TileMap:
         self.group.add(ItemTile(self.screen, texture, self.width, self.height, x,y, name, id))
 
     def AddDroppedItemTile(self, itemTile, x_player, y_player, tilemap):
-        print(f"AddDroppedItemTile Started: itemTile {itemTile}, xplayer {x_player}, yplayer {y_player}, tilemap {tilemap}")
         new_x = self.Find_x_ByPlayer(x_player)
         new_y = self.Find_y_ByPlayer(tilemap, new_x)
 
@@ -57,7 +56,6 @@ class TileMap:
 
     def Blitme(self):
         for tile in self.group.sprites():
-            print(tile)
             tile.Blitme()
 
     def Update(self):

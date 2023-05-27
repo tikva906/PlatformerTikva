@@ -11,24 +11,20 @@ from UI.Button import Button
 class SerializationJson:
 
     @staticmethod
-    def GetStartButton(game):
+    def SerializeButton(dict, game):
         # {"Font": {"Style": "Arial", "Size": 40}, "Render": {"Text": "start", "Antialias": True, "TextColor": [1, 0, 0], "Background": [1, 187, 255]}}
-        with open(f"UI/menu.json", "r") as file:
-            data = json.load(file)
-            startbtn = data["StartButton"]
-            style = startbtn["Font"]["Style"]
-            size = startbtn["Font"]["Size"]
-            text = startbtn["Render"]["Text"]
-            antialias = startbtn["Render"]["Antialias"]
-            textColor = startbtn["Render"]["TextColor"]
-            txtColorCort = (textColor[0], textColor[1], textColor[2])
-            backColor = startbtn["Render"]["Background"]
-            backColorCort = (backColor[0], backColor[1], backColor[2])
-            #font = pygame.font.SysFont(style, size)
-            #btn_text = font.render(text, antialias, txtColorCort, backColorCort)
-            btn = Button("StartButton", style, size, text, antialias, txtColorCort, backColorCort,game)
 
-            return btn
+        style = dict["Font"]["Style"]
+        size = dict["Font"]["Size"]
+        text = dict["Render"]["Text"]
+        antialias = dict["Render"]["Antialias"]
+        textColor = dict["Render"]["TextColor"]
+        txtColorCort = (textColor[0], textColor[1], textColor[2])
+        backColor = dict["Render"]["Background"]
+        backColorCort = (backColor[0], backColor[1], backColor[2])
+        btn = Button(dict["Name"], style, size, text, antialias, txtColorCort, backColorCort,game)
+
+        return btn
 
     def SerializeTile(self, tile): # указал явно что надо передавать
         return {"texture": tile.texture, "x": tile.rect.left, "y": tile.rect.top}

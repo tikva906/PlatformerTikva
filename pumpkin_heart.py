@@ -8,11 +8,16 @@ from pumpkin import Pumpkin
 from TileMap import TileMap
 from healtbar import HealtBar
 from bat import Bat
+from UI.MenuDesigner import MenuDesigner
+from MyLogger import MyLogger
+
 
 
 class Pumpkin_Heart:
     def __init__(self, arg="main"):
         pygame.init()
+        MyLogger.Initialize()
+        MyLogger.logger.info("starts")
         self.isStart = False
         self.needToFlip = True
 
@@ -23,8 +28,8 @@ class Pumpkin_Heart:
         self.itemtilemap = TileMap(self.screen, self)
         #self.PosTiles()
         self.level = 1
-        if (arg == "main"):
-            self.LoadLevel(f"level_{self.level}")
+        #if (arg == "main"):
+           # self.LoadLevel(f"level_{self.level}")
 
         #ser = SerializationJson.SerializationJson()
         #self.SaveMap("level_1", ser.Serialize(self.tilemap, self.itemtilemap, self.damagetilemap))
@@ -37,8 +42,9 @@ class Pumpkin_Heart:
         #self.rect = self.btn_text.get_rect()
         #self.rect.center =self.screen.get_rect().center
 
-        self.button = SerializationJson.SerializationJson.GetStartButton(self)
-        self.button.rect.center = self.screen.get_rect().center
+        #self.button = SerializationJson.SerializationJson.GetStartButton(self)
+        #self.button.rect.center = self.screen.get_rect().center
+        self.menu = MenuDesigner(self)
 
 
     #def DrawButton(self):
@@ -52,6 +58,15 @@ class Pumpkin_Heart:
 
     def InvokeBtnEvent(self, name):
         if name == "StartButton":
+            self.LoadLevel(f"level_{self.level}")
+            self.isStart = True
+
+        elif name.startswith("LevelButton"):
+            MyLogger.logger.info("Нажали на кнопку уровня")
+            self.level = int(name.split('_')[1])
+            MyLogger.logger.info(f"level : {self.level}")
+
+            self.LoadLevel(f"level_{self.level}")
             self.isStart = True
 
     def SaveMap(self, name, result):
@@ -66,6 +81,7 @@ class Pumpkin_Heart:
         fileName = level
 
         data = self.LoadData(fileName)
+        MyLogger.logger.info(data)
 
         damageTilemap = data["DamageTileMap"]
 
@@ -75,9 +91,8 @@ class Pumpkin_Heart:
 
 
         for el in damageTilemap:
-            print(el["texture"], el["x"], el["y"], el["damage"])
+
             self.damagetilemap.AddDamageTile(el["texture"], el["x"], el["y"], el["damage"])
-            print(self.damagetilemap.group.sprites())
 
         for el in tileMap:
             self.tilemap.AddTile(el["texture"], el["x"], el["y"])
@@ -211,10 +226,10 @@ class Pumpkin_Heart:
     def Start(self):
         while not self.isStart:
             self.CheckUIEvent()
-            self.screen.fill((33, 174, 234))
+            #self.screen.fill((33, 174, 234))
             #self.DrawButton()
-            self.button.update()
-            self.button.blitme()
+            self.menu.Update()
+            self.menu.Blitme()
             pygame.display.flip()
 
         while True:

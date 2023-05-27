@@ -17,7 +17,6 @@ class Tile(Sprite):
         self.rect.top = y
 
     def Blitme(self):
-        print(f"Отрисован: {self}")
         self.Screen.blit(self.image,self.rect)
 
     def update(self):

@@ -7,18 +7,20 @@ class Button(Sprite):
         self.screen = game.screen
         self.name = name
         self.game = game
+        self.antialias = antialias
+        self.txtColorCort = txtColorCort
+        self.backColorCort = backColorCort
+        self.style = style
+        self.size = size
+        self.SetText(text)
 
-        self.initialize(style, size, text, antialias, txtColorCort, backColorCort)
-
-    def initialize(self, style, size, text, antialias, txtColorCort, backColorCort):
-        font = pygame.font.SysFont(style, size)
-        self.btn_text = font.render(text, antialias, txtColorCort, backColorCort)
+    def SetText(self, text):
+        font = pygame.font.SysFont(self.style, self.size)
+        self.btn_text = font.render(text, self.antialias, self.txtColorCort, self.backColorCort)
         self.rect = self.btn_text.get_rect()
 
     def update(self):
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                self.CheckButtonClick()
+        pass
 
     def CheckButtonClick(self):
         mouse_pos = pygame.mouse.get_pos()
