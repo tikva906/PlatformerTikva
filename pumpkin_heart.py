@@ -27,7 +27,9 @@ class Pumpkin_Heart:
         self.damagetilemap = TileMap(self.screen, self)
         self.itemtilemap = TileMap(self.screen, self)
         #self.PosTiles()
-        self.level = 1
+
+        if arg == "main":
+            self.level = 1
         #if (arg == "main"):
            # self.LoadLevel(f"level_{self.level}")
 
@@ -44,7 +46,8 @@ class Pumpkin_Heart:
 
         #self.button = SerializationJson.SerializationJson.GetStartButton(self)
         #self.button.rect.center = self.screen.get_rect().center
-        self.menu = MenuDesigner(self)
+        if arg == "main":
+            self.menu = MenuDesigner(self)
 
 
     #def DrawButton(self):
@@ -88,7 +91,6 @@ class Pumpkin_Heart:
         tileMap = data["TileMap"]
 
         itemTileMap = data["ItemTileMap"]
-
 
         for el in damageTilemap:
 
